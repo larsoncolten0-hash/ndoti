@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/* Design tokens.
+   High contrast for outdoor sunlight on cheap screens. Vest yellow ties the
+   interface to the collectors' high-visibility vests and the gate-code plates. */
+@theme {
+  --font-sans: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --color-ink: #16211C;
+  --color-forest: #123B2E;
+  --color-vest: #FFC21A;
+  --color-leaf: #1F7A55;
+  --color-alarm: #C4331B;
+  --color-mist: #EEF2EE;
+}
+
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: #FFFFFF;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+*, *::before, *::after { box-sizing: inherit; }
+
+:focus-visible { outline: 3px solid var(--color-vest); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* Shared building blocks: large touch targets (min 56px) for gloves and sunlight. */
+@utility btn {
+  @apply inline-flex w-full min-h-14 items-center justify-center gap-2 rounded-xl px-5 text-center text-lg font-bold disabled:opacity-50;
+}
+@utility btn-primary { @apply btn bg-forest text-white active:bg-ink; }
+@utility btn-vest { @apply btn bg-vest text-ink active:brightness-95; }
+@utility btn-ghost { @apply btn border-2 border-forest bg-white text-forest; }
+@utility field {
+  @apply block w-full min-h-14 rounded-xl border-2 border-ink/25 bg-white px-4 text-lg focus:border-forest focus:outline-none;
+}
+@utility label { @apply mb-1 block font-bold; }
