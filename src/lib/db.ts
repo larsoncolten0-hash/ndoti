@@ -1,5 +1,11 @@
 import 'server-only';
 import { MongoClient, type Db } from 'mongodb';
+import dns from 'node:dns';
+
+// mongodb+srv:// needs a DNS SRV lookup to find the cluster hosts. Some ISP/VPN/router
+// resolvers return EBADRESP for SRV queries even though they handle normal A lookups fine,
+// so point Node at public resolvers that do support it instead of the OS default.
+dns.setServers(['1.1.1.1', '8.8.8.8']);
 
 const uri = process.env.MONGODB_URI;
 const dbName = process.env.MONGODB_DB ?? 'ndoti';
